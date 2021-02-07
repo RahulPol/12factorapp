@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title 12 Factor App
+        link(rel="stylesheet", href="/css/main.css")
+    body
+        div.backdrop
+        header.main-header
+            button#side-menu-toggle Menu
+            nav.main-header__nav
+                ul.main-header__item-list
+                    li.main-header__item
+                        a(href="/", class="active") Home
+                    li.main-header__item
+                        a(href="/api-docs") Swagger
+            nav.mobile-nav
+                ul.mobile-nav__item-list
+                    li.main-header__item
+                        a(href="/", class="active") Home
+                    li.main-header__item
+                        a(href="/api-docs") Swagger
+        script(src="/js/main.js")

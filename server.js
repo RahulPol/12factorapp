@@ -10,13 +10,19 @@ const swaggerDocument = jsyaml.load(spec);
 const feedRoutes = require("./routes/feedRoutes");
 
 const app = express();
+app.set("view engine", "pug");
 
 // app.use(bodyParser.urlencoded()) // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/v1/feed", feedRoutes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get("/", (req, res, next) => {
+  res.render("index");
+});
 
 app.listen(8080, () => {
   console.log("Server started!");
