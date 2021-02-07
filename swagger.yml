@@ -9,9 +9,6 @@ basePath: /v1
 tags:
   - name: "Feed"
     description: "Everything about your Posts"
-schemes:
-  - http
-  - https
 
 paths:
   /feed/posts:
