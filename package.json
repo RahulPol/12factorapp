@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "An express js Restful api that follows 12 factor app principles.",
   "main": "server.js",
+  "engines": {
+    "node": "15.5.1",
+    "npm": "7.3.0"
+  },
   "scripts": {
-    "start": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js"
   },
   "repository": {
     "type": "git",
