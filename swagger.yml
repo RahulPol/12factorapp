@@ -1,0 +1,95 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: 12factor compatible API
+  description: An express js Restful api that follows 12 factor app principles.
+  contact:
+    email: "polrahul10@gmail.com"
+host: localhost:8080
+basePath: /v1
+tags:
+  - name: "Feed"
+    description: "Everything about your Posts"
+schemes:
+  - http
+  - https
+
+paths:
+  /feed/posts:
+    get:
+      tags:
+        - "Feed"
+      summary: Gets posts
+      description: Returns a list containing all posts
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: A list of posts
+          schema:
+            $ref: "#/definitions/Posts"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+  /feed/post:
+    post:
+      tags:
+        - "Feed"
+      summary: Creates post
+      description: Create a new post
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: post
+          in: body
+          description: The post to create.
+          schema:
+            required:
+              - title
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+      responses:
+        201:
+          description: Newly created post
+          schema:
+            properties:
+              message:
+                type: string
+              post:
+                $ref: "#/definitions/Post"
+        400:
+          description: Bad request.
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+
+definitions:
+  Post:
+    required:
+      - id
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      content:
+        type: string
+  Posts:
+    type: array
+    items:
+      $ref: "#/definitions/Post"
+  Error:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+responses:
+  Standard500ErrorResponse:
+    description: An unexpected error occurred.
+    schema:
+      $ref: "#/definitions/Error"
