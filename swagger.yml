@@ -42,7 +42,7 @@ paths:
           in: body
           description: The post to create.
           schema:
-            $ref: "#/definitions/Post"
+            $ref: "#/definitions/PostBody"
       responses:
         201:
           description: Newly created post
@@ -81,7 +81,27 @@ definitions:
       creator:
         $ref: "#/definitions/User"
       createdAt:
-        type: date
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+  PostBody:
+    required:
+      - title
+      - content
+      - imageUrl
+    properties:
+      title:
+        type: string
+        minLength: 5
+      content:
+        type: string
+        minLength: 5
+      imageUrl:
+        type: string
+      creator:
+        $ref: "#/definitions/User"
   Posts:
     type: array
     items:
@@ -110,3 +130,27 @@ responses:
     description: Validation failed.
     schema:
       $ref: "#/definitions/ValidationError"
+# parameters:
+#   title:
+#     name: title
+#     in: body
+#     required: true
+#     description: Title of the post
+#     type: string
+#   content:
+#     name: content
+#     in: body
+#     required: true
+#     description: Content of the post
+#     type: string
+#   imageUrl:
+#     name: imageUrl
+#     in: body
+#     description: Image of the post
+#     type: string
+#   creator:
+#     name: creator
+#     in: body
+#     description: Creator of the post
+#     schema:
+#       $ref: "#/definitions/User"
