@@ -1,3 +1,4 @@
+const path = require("path");
 const { validationResult } = require("express-validator/check");
 
 const Post = require("../models/postModel");
@@ -27,13 +28,19 @@ exports.createPost = (req, res, next) => {
     error.errors = errors.array();
     throw error;
   }
+  if (!req.file) {
+    const error = new Error("No image provided");
+    error.statusCode = constants.HTTP_VALIDATION_FAILED;
+    throw error;
+  }
 
   const title = req.body.title;
   const content = req.body.content;
+  const imageUrl = req.file.path.replace("public\\", "").trim();
   const post = new Post({
     title,
     content,
-    imageUrl: getBaseURL(req) + "/images/avatar-female.jpg",
+    imageUrl: path.join(getBaseURL(req), imageUrl),
     creator: {
       name: "Rahul Pol",
     },

@@ -5,6 +5,8 @@ const fs = require("fs");
 const jsyaml = require("js-yaml");
 const path = require("path");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const uuid = require("uuid");
 
 const spec = fs.readFileSync(path.join(__dirname, "swagger.yml"), "utf-8");
 const feedRoutes = require("./routes/feedRoutes");
@@ -13,8 +15,32 @@ const constants = require("./common/constants");
 const app = express();
 app.set("view engine", "pug");
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, uuid.v4() + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype == "image/png" ||
+    file.mimetype == "image/jpg" ||
+    file.mimetype == "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 // app.use(bodyParser.urlencoded()) // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
+);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {

@@ -34,15 +34,25 @@ paths:
       summary: Creates post
       description: Create a new post
       consumes:
-        - "application/json"
+        - application/x-www-form-urlencoded
       produces:
         - "application/json"
       parameters:
-        - name: post
-          in: body
-          description: The post to create.
-          schema:
-            $ref: "#/definitions/PostBody"
+        - name: "title"
+          in: "formData"
+          description: "title of the post"
+          required: true
+          type: "string"
+        - name: "content"
+          in: "formData"
+          description: "content of the post"
+          required: true
+          type: "string"
+        - name: "image"
+          in: "formData"
+          description: "file to upload"
+          required: true
+          type: "file"
       responses:
         201:
           description: Newly created post
@@ -110,16 +120,19 @@ definitions:
     required:
       - title
       - content
-      - imageUrl
+      - image
     properties:
       title:
+        in: formData
         type: string
         minLength: 5
       content:
+        in: formData
         type: string
         minLength: 5
-      imageUrl:
-        type: string
+      image:
+        in: formData
+        type: file
       creator:
         $ref: "#/definitions/User"
   Posts:
