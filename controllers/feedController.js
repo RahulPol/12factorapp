@@ -80,3 +80,46 @@ exports.getPost = (req, res, next) => {
       next(err);
     });
 };
+
+exports.updatePost = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let error = new Error("Validation failed. Entered data is incorrect! ");
+    error.statusCode = constants.HTTP_VALIDATION_FAILED;
+    error.errors = errors.array();
+    throw error;
+  }
+  const postId = req.params.postId;
+  const { title, content } = req.body;
+  let imageUrl = req.body.image;
+  if (req.file) {
+    imageUrl = req.file.path.replace("public\\", "").trim();
+  }
+  if (!imageUrl) {
+    const error = new Error("No file picked.");
+    error.statusCode = constants.HTTP_VALIDATION_FAILED;
+    throw error;
+  }
+
+  Post.findById(postId)
+    .then((post) => {
+      if (!post) {
+        const error = new Error("The post not found!");
+        error.statusCode = constants.HTTP_NOT_FOUND;
+        throw error;
+      }
+      post.title = title;
+      post.imageUrl = imageUrl;
+      post.content = content;
+      return post.save();
+    })
+    .then((result) => {
+      res.status(constants.HTTP_OK).json(result);
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};

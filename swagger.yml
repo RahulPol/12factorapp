@@ -43,11 +43,13 @@ paths:
           description: "title of the post"
           required: true
           type: "string"
+          minLength: 5
         - name: "content"
           in: "formData"
           description: "content of the post"
           required: true
           type: "string"
+          minLength: 5
         - name: "image"
           in: "formData"
           description: "file to upload"
@@ -88,7 +90,48 @@ paths:
             $ref: "#/definitions/Post"
         404:
           $ref: "#/definitions/Post"
-
+    put:
+      tags:
+        - "Feed"
+      summary: Updates existing post
+      description: Updates a post
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          type: string
+        - name: "title"
+          in: "formData"
+          description: "title of the post"
+          required: true
+          type: "string"
+          minLength: 5
+        - name: "content"
+          in: "formData"
+          description: "content of the post"
+          required: true
+          type: "string"
+          minLength: 5
+        - name: "image"
+          in: "formData"
+          description: "file to upload"
+          required: true
+          type: "file"
+      responses:
+        200:
+          description: updated post
+          schema:
+            $ref: "#/definitions/Post"
+        400:
+          description: Bad request.
+        422:
+          $ref: "#/responses/Standard422ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
 definitions:
   User:
     required:
