@@ -17,20 +17,6 @@ exports.getPosts = (req, res, next) => {
       }
       next(err);
     });
-
-  // res.status(constants.HTTP_OK).json({
-  //   posts: [
-  //     {
-  //       title: "First post",
-  //       content: "This is first post!",
-  //       imageUrl: getBaseURL(req) + "/images/avatar-female.jpg",
-  //       creator: {
-  //         name: "Rahul Pol",
-  //       },
-  //       createdAt: new Date(),
-  //     },
-  //   ],
-  // });
 };
 
 exports.createPost = (req, res, next) => {
@@ -64,6 +50,25 @@ exports.createPost = (req, res, next) => {
     .catch((err) => {
       if (!err.statusCode) {
         err.statusCode = constants.HTTP_INTERNAL_SERVER_ERROR;
+      }
+      next(err);
+    });
+};
+
+exports.getPost = (req, res, next) => {
+  const postId = req.params.postId;
+  Post.findById(postId)
+    .then((post) => {
+      if (!post) {
+        const error = new Error("The post not found!");
+        error.statusCode = constants.HTTP_NOT_FOUND;
+        throw error;
+      }
+      res.status(constants.HTTP_OK).json(post);
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
       }
       next(err);
     });

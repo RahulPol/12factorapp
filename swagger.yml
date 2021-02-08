@@ -58,6 +58,26 @@ paths:
           $ref: "#/responses/Standard422ErrorResponse"
         500:
           $ref: "#/responses/Standard500ErrorResponse"
+  /feed/post/{postId}:
+    get:
+      tags:
+        - "Feed"
+      summary: Gets a post
+      description: Returns a post matching for given post id
+      produces:
+        - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: A Post
+          schema:
+            $ref: "#/definitions/Post"
+        404:
+          $ref: "#/definitions/Post"
 
 definitions:
   User:
@@ -124,6 +144,10 @@ definitions:
 responses:
   Standard500ErrorResponse:
     description: An unexpected error occurred.
+    schema:
+      $ref: "#/definitions/Error"
+  Standard404ErrorResponse:
+    description: Resource not found.
     schema:
       $ref: "#/definitions/Error"
   Standard422ErrorResponse:
