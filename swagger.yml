@@ -42,13 +42,7 @@ paths:
           in: body
           description: The post to create.
           schema:
-            required:
-              - title
-            properties:
-              title:
-                type: string
-              content:
-                type: string
+            $ref: "#/definitions/Post"
       responses:
         201:
           description: Newly created post
@@ -60,20 +54,34 @@ paths:
                 $ref: "#/definitions/Post"
         400:
           description: Bad request.
+        422:
+          $ref: "#/responses/Standard422ErrorResponse"
         500:
           $ref: "#/responses/Standard500ErrorResponse"
 
 definitions:
+  User:
+    required:
+      - name
+    properties:
+      name:
+        type: string
   Post:
     required:
-      - id
+      - _id
     properties:
-      id:
+      _id:
         type: string
       title:
         type: string
       content:
         type: string
+      imageUrl:
+        type: string
+      creator:
+        $ref: "#/definitions/User"
+      createdAt:
+        type: date
   Posts:
     type: array
     items:
@@ -84,8 +92,21 @@ definitions:
         type: string
       message:
         type: string
+  ValidationError:
+    properties:
+      message:
+        type: string
+      errors:
+        type: array
+        items:
+          type: object
+
 responses:
   Standard500ErrorResponse:
     description: An unexpected error occurred.
     schema:
       $ref: "#/definitions/Error"
+  Standard422ErrorResponse:
+    description: Validation failed.
+    schema:
+      $ref: "#/definitions/ValidationError"
