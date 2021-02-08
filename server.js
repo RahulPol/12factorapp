@@ -6,8 +6,8 @@ const jsyaml = require("js-yaml");
 const path = require("path");
 
 const spec = fs.readFileSync(path.join(__dirname, "swagger.yml"), "utf-8");
-const swaggerDocument = jsyaml.load(spec);
 const feedRoutes = require("./routes/feedRoutes");
+const { PORT } = require("./common/constants");
 
 const app = express();
 app.set("view engine", "pug");
@@ -29,12 +29,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/v1/feed", feedRoutes);
 
+const swaggerDocument = jsyaml.load(spec);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res, next) => {
   res.render("index");
 });
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log("Server started!");
 });

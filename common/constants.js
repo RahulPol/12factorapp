@@ -1,3 +1,6 @@
+// PORT
+exports.PORT = 8080;
+
 // HTTP STATUS CODES
 // Successful responses
 exports.HTTP_OK = 200;
