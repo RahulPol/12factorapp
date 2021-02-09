@@ -20,5 +20,111 @@ html(lang="en")
                     li.main-header__item
                         a(href="/", class="active") Home
                     li.main-header__item
-                        a(href="/api-docs") Swagger
+                        a(href="/api-docs") Swagger  
+        .content
+            .hero 
+                .text-content
+                    .title  12 Factor Compatible Node JS API                                        
+                .action-content            
+                    .swaggerButton(onclick="window.location='/api-docs';")                                               
+                        img(src="../images/swagger-logo.png", alt="", srcset="")
+                        p Swagger
+            .factors
+                .factor-card
+                    .factor-title I. Codebase
+                    .factor-content 
+                        .factor-content-desc One codebase tracked in revision control, many deploys.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc This code is tracked on github. Git flow can be used to manage branches for releases.
+                .factor-card
+                    .factor-title II. Dependencies
+                    .factor-content 
+                        .factor-content-desc Explicitly declare and isolate dependencies.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc package.json declare and lock dependencies to specific versions. npm installs modules to a local node_modules dir so each application's dependencies are isolated from the rest of the system.
+                .factor-card
+                    .factor-title III. Config
+                    .factor-content 
+                        .factor-content-desc Store config in the environment.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc Configuration is stored in environment variables and supplied through the config vars. Connection configuration to Cloud Foundry Services, like our database, are provided through the DATABASE_URI environment variable.
+                .factor-card
+                    .factor-title IV. Backing services
+                    .factor-content 
+                        .factor-content-desc Treat backing services as attached resources.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc We connect to the database via a connection url provided by the DATABASE_URI environment variable. If we needed to setup a new database, we would simply update the DATABASE_URI connection, and for database operation like create, update, read, delete, we can use factory to attach new database.                                
+                .factor-card
+                    .factor-title V. Build, release, run
+                    .factor-content 
+                        .factor-content-desc Strictly separate build and run stages.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc package.json allows to configure "scripts" so that we can codify various tasks. npm run build is used to build this application and produces minified javascript and css files to be served as static assets.
+                                p npm start is used to start the application. The nodejs_buildpack runs this command by default to start your application.
+                .factor-card
+                    .factor-title VI. Processes
+                    .factor-content 
+                        .factor-content-desc Execute the app as one or more stateless processes.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it (Doubtful, check again)
+                            .factor-content-explanation-desc We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is constantly being updated even if our application is not. Machines die, security patches cause reboots. Server resources become consumed. Any of these things could cause the platform to kill your application. Don't worry though, Cloud Foundry makes sure to start a new process on the new freshly patched host before killing your old process.
+                .factor-card
+                    .factor-title VII. Port binding
+                    .factor-content 
+                        .factor-content-desc Export services via port binding.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc The port-binding approach means that one app can become the backing service for another app, by providing the URL to the backing app as a resource handle in the config for the consuming app.
+                                p Heroku assigns your application instance a port on the host machine and exposes it through the PORT environment variable
+                .factor-card
+                    .factor-title VIII. Concurrency
+                    .factor-content 
+                        .factor-content-desc Scale out via the process model
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it (Doubtful, check again)
+                            .factor-content-explanation-desc SIGTERM SIGINT above?
+                .factor-card
+                    .factor-title IX. Disposability
+                    .factor-content 
+                        .factor-content-desc Maximize robustness with fast startup and graceful shutdown.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc This code is tracked on github. Git flow can be used to manage branches for releases.
+                .factor-card
+                    .factor-title X. Dev/prod parity
+                    .factor-content 
+                        .factor-content-desc Keep development, staging, and production as similar as possible
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc We are using heroku's Github connection to auto deploy master branch. And for all new feature we create new branch and merge it later to master branch.
+                .factor-card
+                    .factor-title XI. Logs
+                    .factor-content 
+                        .factor-content-desc Treat logs as event streams.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc We use winston as our logger. We use logging levels to provide feedback about how the application is working. Some of this feedback could warrant a bug fix.
+                                p Warnings are conditions that are unexpected and might hint that a bug exists in the code.
+                .factor-card
+                    .factor-title XII. Admin processes
+                    .factor-content 
+                        .factor-content-desc Run admin/management tasks as one-off processes.
+                        .factor-content-explanation
+                            .factor-content-explanation-header How we do it
+                            .factor-content-explanation-desc Read explanation on twelve factor app
+            .socialLinks
+                a(href="https://www.linkedin.com/in/rahul-pol-409a2649/" rel="noreferrer" target="_blank")
+                    img(src="/images/linkedIn-1.png", alt="LinkedIn", title="LinkedIn")
+                a(href="https://twitter.com/RahulPo52226157" rel="noreferrer" target="_blank")
+                    img(src="/images/tweeter.png", alt="Twitter", title="Twitter")
+                a(href="https://github.com/RahulPol" rel="noreferrer" target="_blank")
+                    img(src="/images/github.png", alt="Github", title="Github")
+                a(href="https://rahul-pol.medium.com/" rel="noreferrer" target="_blank")
+                    img(src="/images/Medium.png", alt="Medium", title="Medium")
+        
         script(src="/js/index.js")
