@@ -26,6 +26,7 @@ paths:
           format: int32
           minimum: 0
           default: 0
+          description: "Set 0 to get all posts"
       responses:
         200:
           description: A list of posts
