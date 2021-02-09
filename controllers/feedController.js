@@ -1,3 +1,4 @@
+const fs = require("fs");
 const path = require("path");
 const { validationResult } = require("express-validator/check");
 
@@ -108,8 +109,11 @@ exports.updatePost = (req, res, next) => {
         error.statusCode = constants.HTTP_NOT_FOUND;
         throw error;
       }
+      if (imageUrl !== post.imageUrl) {
+        clearImage(post.imageUrl);
+      }
       post.title = title;
-      post.imageUrl = imageUrl;
+      post.imageUrl = path.join(getBaseURL(req), imageUrl);
       post.content = content;
       return post.save();
     })
@@ -122,4 +126,14 @@ exports.updatePost = (req, res, next) => {
       }
       next(err);
     });
+};
+
+const clearImage = (filePath) => {
+  filePath = path.join(__dirname, "..", "public", filePath);
+  fs.unlink(filePath, (err) => {
+    // const error = new Error("Error while clearing previous image");
+    // error.statusCode = constants.HTTP_INTERNAL_SERVER_ERROR;
+    // next(err);
+    console.log(err);
+  });
 };
