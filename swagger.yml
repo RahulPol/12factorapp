@@ -89,7 +89,9 @@ paths:
           schema:
             $ref: "#/definitions/Post"
         404:
-          $ref: "#/definitions/Post"
+          $ref: "#/responses/Standard404ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
     put:
       tags:
         - "Feed"
@@ -132,6 +134,26 @@ paths:
           $ref: "#/responses/Standard422ErrorResponse"
         500:
           $ref: "#/responses/Standard500ErrorResponse"
+    delete:
+      tags:
+        - "Feed"
+      summary: Deletes a post
+      description: Deletes a post matching for given post id
+      produces:
+        - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: A Ok status code
+        404:
+          $ref: "#/responses/Standard404ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+
 definitions:
   User:
     required:

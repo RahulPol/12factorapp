@@ -137,3 +137,28 @@ const clearImage = (filePath) => {
     console.log(err);
   });
 };
+
+exports.deletePost = (req, res, next) => {
+  const postId = req.params.postId;
+  Post.findById(postId)
+    .then((post) => {
+      if (!post) {
+        const error = new Error("The post not found!");
+        error.statusCode = constants.HTTP_NOT_FOUND;
+        throw error;
+      }
+      return Post.findByIdAndRemove(postId);
+    })
+    .then((result) => {
+      res
+        .status(constants.HTTP_OK)
+        .json({ message: "Deleted post successfully." });
+    })
+    .catch((err) => {
+      console.log("failure in delete", err);
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
