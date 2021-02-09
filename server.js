@@ -10,6 +10,7 @@ const uuid = require("uuid");
 
 const spec = fs.readFileSync(path.join(__dirname, "swagger.yml"), "utf-8");
 const feedRoutes = require("./routes/feedRoutes");
+const authRoutes = require("./routes/authRoutes");
 const constants = require("./common/constants");
 
 const app = express();
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/v1/feed", feedRoutes);
+app.use("/v1/auth", authRoutes);
 
 const swaggerDocument = jsyaml.load(spec);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

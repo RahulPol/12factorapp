@@ -165,6 +165,34 @@ paths:
           $ref: "#/responses/Standard404ErrorResponse"
         500:
           $ref: "#/responses/Standard500ErrorResponse"
+  /auth/signup:
+    put:
+      tags:
+        - "User"
+      summary: Create a new user
+      description: Creates a user
+      consumes:
+        - application/json
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "user object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/PostUser"
+      responses:
+        201:
+          description: created user
+          schema:
+            $ref: "#/responses/SignUpResponse"
+        400:
+          description: Bad request.
+        422:
+          $ref: "#/responses/Standard422ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
 
 definitions:
   User:
@@ -230,7 +258,15 @@ definitions:
         type: array
         items:
           type: object
-
+  PostUser:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
 responses:
   Standard500ErrorResponse:
     description: An unexpected error occurred.
@@ -244,7 +280,14 @@ responses:
     description: Validation failed.
     schema:
       $ref: "#/definitions/ValidationError"
-# parameters:
+  SignUpResponse:
+    description: User created successfully.
+    properties:
+      message:
+        type: string
+      userId:
+        type: string
+      # parameters:
 #   title:
 #     name: title
 #     in: body
