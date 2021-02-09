@@ -8,10 +8,20 @@ const constants = require("../common/constants");
 const { getBaseURL } = require("../common/utilities");
 
 exports.getPosts = (req, res, next) => {
-  // .json will set "Content-Type":"application/json" response header
+  const currentPage = req.query.page || 0;
+  let perPage = 2;
+  let totalItems;
   Post.find()
+    .countDocuments()
+    .then((count) => {
+      totalItems = count;
+      const skipCount = currentPage == 0 ? 0 : (currentPage - 1) * perPage;
+      const limitCount = currentPage == 0 ? totalItems : perPage;
+      perPage = currentPage == 0 ? totalItems : perPage;
+      return Post.find().skip(skipCount).limit(limitCount);
+    })
     .then((posts) => {
-      res.status(constants.HTTP_OK).json(posts);
+      res.status(200).json({ posts, totalItems, perPage });
     })
     .catch((err) => {
       if (!err.statusCode) {
