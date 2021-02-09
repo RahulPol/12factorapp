@@ -21,7 +21,7 @@ exports.getPosts = (req, res, next) => {
       return Post.find().skip(skipCount).limit(limitCount);
     })
     .then((posts) => {
-      res.status(200).json({ posts, totalItems, perPage });
+      res.status(constants.HTTP_OK).json({ posts, totalItems, perPage });
     })
     .catch((err) => {
       if (!err.statusCode) {
@@ -86,7 +86,7 @@ exports.getPost = (req, res, next) => {
     })
     .catch((err) => {
       if (!err.statusCode) {
-        err.statusCode = 500;
+        err.statusCode = constants.HTTP_INTERNAL_SERVER_ERROR;
       }
       next(err);
     });
@@ -132,7 +132,7 @@ exports.updatePost = (req, res, next) => {
     })
     .catch((err) => {
       if (!err.statusCode) {
-        err.statusCode = 500;
+        err.statusCode = constants.HTTP_INTERNAL_SERVER_ERROR;
       }
       next(err);
     });
@@ -167,7 +167,7 @@ exports.deletePost = (req, res, next) => {
     .catch((err) => {
       console.log("failure in delete", err);
       if (!err.statusCode) {
-        err.statusCode = 500;
+        err.statusCode = constants.HTTP_INTERNAL_SERVER_ERROR;
       }
       next(err);
     });
