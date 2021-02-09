@@ -74,7 +74,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI || constants.MONGODB_URI)
   .then(() => {
     app.listen(process.env.PORT || constants.PORT, () => {
       console.log("Server started!");

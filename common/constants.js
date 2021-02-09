@@ -1,6 +1,10 @@
 // PORT
 exports.PORT = 8080;
 
+// MONGO_DB link
+exports.MONGODB_URI =
+  "mongodb+srv://rahul-pol:adminadmin@cluster0.ppeta.mongodb.net/messages?retryWrites=true&w=majority";
+
 // HTTP STATUS CODES
 // Successful responses
 exports.HTTP_OK = 200;
