@@ -74,9 +74,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://rahul-pol:adminadmin@cluster0.ppeta.mongodb.net/messages?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     app.listen(process.env.PORT || constants.PORT, () => {
       console.log("Server started!");
