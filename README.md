@@ -20,6 +20,6 @@ Explicitly declare and isolate dependencies.
 
 #### How we do it
 
-[package.json][package-json] declare and lock dependencies to specific versions.
-[npm][npmjs] installs modules to a local `node_modules` dir so each
+[package.json](https://github.com/RahulPol/12factorapp/blob/main/package.json) declare and lock dependencies to specific versions.
+[npm](https://www.npmjs.com/) installs modules to a local `node_modules` dir so each
 application's dependencies are isolated from the rest of the system.
