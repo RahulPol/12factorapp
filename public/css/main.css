@@ -273,6 +273,11 @@ form {
   font-weight: 700;
 }
 
+.factor-card .factor-title a {
+  color: #551a8b;
+  text-decoration: dotted;
+}
+
 .factor-card .factor-content .factor-content-explanation {
   margin-top: 15px;
   display: flex;
