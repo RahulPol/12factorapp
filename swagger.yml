@@ -1,0 +1,314 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: 12factor compatible API
+  description: An express js Restful api that follows 12 factor app principles.
+  contact:
+    email: "polrahul10@gmail.com"
+basePath: /v1
+tags:
+  - name: "Feed"
+    description: "Everything about your Posts"
+
+paths:
+  /feed/posts:
+    get:
+      tags:
+        - "Feed"
+      summary: Gets posts
+      description: Returns a list containing all posts
+      produces:
+        - "application/json"
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+          description: "Set 0 to get all posts"
+      responses:
+        200:
+          description: A list of posts
+          schema:
+            properties:
+              posts:
+                $ref: "#/definitions/Posts"
+              totalItems:
+                type: integer
+              perPage:
+                type: integer
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+  /feed/post:
+    post:
+      tags:
+        - "Feed"
+      summary: Creates post
+      description: Create a new post
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - "application/json"
+      parameters:
+        - name: "title"
+          in: "formData"
+          description: "title of the post"
+          required: true
+          type: "string"
+          minLength: 5
+        - name: "content"
+          in: "formData"
+          description: "content of the post"
+          required: true
+          type: "string"
+          minLength: 5
+        - name: "image"
+          in: "formData"
+          description: "file to upload"
+          required: true
+          type: "file"
+      responses:
+        201:
+          description: Newly created post
+          schema:
+            properties:
+              message:
+                type: string
+              post:
+                $ref: "#/definitions/Post"
+        400:
+          description: Bad request.
+        422:
+          $ref: "#/responses/Standard422ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+  /feed/post/{postId}:
+    get:
+      tags:
+        - "Feed"
+      summary: Gets a post
+      description: Returns a post matching for given post id
+      produces:
+        - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: A Post
+          schema:
+            $ref: "#/definitions/Post"
+        404:
+          $ref: "#/responses/Standard404ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+    put:
+      tags:
+        - "Feed"
+      summary: Updates existing post
+      description: Updates a post
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          type: string
+        - name: "title"
+          in: "formData"
+          description: "title of the post"
+          required: true
+          type: "string"
+          minLength: 5
+        - name: "content"
+          in: "formData"
+          description: "content of the post"
+          required: true
+          type: "string"
+          minLength: 5
+        - name: "image"
+          in: "formData"
+          description: "file to upload"
+          required: true
+          type: "file"
+      responses:
+        200:
+          description: updated post
+          schema:
+            $ref: "#/definitions/Post"
+        400:
+          description: Bad request.
+        422:
+          $ref: "#/responses/Standard422ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+    delete:
+      tags:
+        - "Feed"
+      summary: Deletes a post
+      description: Deletes a post matching for given post id
+      produces:
+        - "application/json"
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: A Ok status code
+        404:
+          $ref: "#/responses/Standard404ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+  # /auth/signup:
+  #   put:
+  #     tags:
+  #       - "User"
+  #     summary: Create a new user
+  #     description: Creates a user
+  #     consumes:
+  #       - application/json
+  #     produces:
+  #       - "application/json"
+  #     parameters:
+  #       - in: "body"
+  #         name: "body"
+  #         description: "user object that needs to be added to the store"
+  #         required: true
+  #         schema:
+  #           $ref: "#/definitions/PostUser"
+  #     responses:
+  #       201:
+  #         description: created user
+  #         schema:
+  #           $ref: "#/responses/SignUpResponse"
+  #       400:
+  #         description: Bad request.
+  #       422:
+  #         $ref: "#/responses/Standard422ErrorResponse"
+  #       500:
+  #         $ref: "#/responses/Standard500ErrorResponse"
+
+definitions:
+  User:
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  Post:
+    required:
+      - _id
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      content:
+        type: string
+      imageUrl:
+        type: string
+      creator:
+        $ref: "#/definitions/User"
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+  PostBody:
+    required:
+      - title
+      - content
+      - image
+    properties:
+      title:
+        in: formData
+        type: string
+        minLength: 5
+      content:
+        in: formData
+        type: string
+        minLength: 5
+      image:
+        in: formData
+        type: file
+      creator:
+        $ref: "#/definitions/User"
+  Posts:
+    type: array
+    items:
+      $ref: "#/definitions/Post"
+  Error:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+  ValidationError:
+    properties:
+      message:
+        type: string
+      errors:
+        type: array
+        items:
+          type: object
+  # PostUser:
+  #   type: "object"
+  #   properties:
+  #     name:
+  #       type: "string"
+  #     email:
+  #       type: "string"
+  #     password:
+  #       type: "string"
+responses:
+  Standard500ErrorResponse:
+    description: An unexpected error occurred.
+    schema:
+      $ref: "#/definitions/Error"
+  Standard404ErrorResponse:
+    description: Resource not found.
+    schema:
+      $ref: "#/definitions/Error"
+  Standard422ErrorResponse:
+    description: Validation failed.
+    schema:
+      $ref: "#/definitions/ValidationError"
+  # SignUpResponse:
+  #   description: User created successfully.
+  #   properties:
+  #     message:
+  #       type: string
+  #     userId:
+  #       type: string
+  # parameters:
+#   title:
+#     name: title
+#     in: body
+#     required: true
+#     description: Title of the post
+#     type: string
+#   content:
+#     name: content
+#     in: body
+#     required: true
+#     description: Content of the post
+#     type: string
+#   imageUrl:
+#     name: imageUrl
+#     in: body
+#     description: Image of the post
+#     type: string
+#   creator:
+#     name: creator
+#     in: body
+#     description: Creator of the post
+#     schema:
+#       $ref: "#/definitions/User"
