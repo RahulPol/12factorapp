@@ -7,14 +7,18 @@ const path = require("path");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const uuid = require("uuid");
+require("dotenv").config();
 
 const spec = fs.readFileSync(path.join(__dirname, "swagger.yml"), "utf-8");
 const feedRoutes = require("./routes/feedRoutes");
 const authRoutes = require("./routes/authRoutes");
 const constants = require("./common/constants");
+const config = require("./common/config");
 
 const app = express();
 app.set("view engine", "pug");
+
+const configInstance = new config();
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -76,7 +80,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGODB_URI || constants.MONGODB_URI)
+  .connect(configInstance.get("DATABASE_URI"))
   .then(() => {
     app.listen(process.env.PORT || constants.PORT, () => {
       console.log("Server started!");
