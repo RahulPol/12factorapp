@@ -95,3 +95,14 @@ In the twelve-factor app, processes are a first class citizen. The developer can
 This includes individual processes from handling their own internal multiplexing, via threads inside the runtime VM, or the async/event based model found in tools such as EventMachine, Twisted, or Node.js.
 
 The process model truly shines when it comes time to scale out. The share-nothing, horizontally partitionable nature of twelve-factor app processes means that adding more concurrency is a simple and reliable operation. The array of process types and number of processes of each type is known as the process formation.
+
+### [IX. Disposability](https://12factor.net/disposability)
+
+Maximize robustness with fast startup and graceful shutdown.
+
+#### How we do it
+
+The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice. This facilitates fast elastic scaling, rapid deployment of code or config changes, and robustness of production deploys.
+
+We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is
+constantly being updated even if our application is not. By listening to process signals, we know when to stop serving requests, flush database connections, and close any open resources.
