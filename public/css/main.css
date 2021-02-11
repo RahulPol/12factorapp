@@ -46,8 +46,9 @@ form {
 }
 
 .main-header__item {
-  margin: 0 1rem;
-  padding: 0;
+  margin: 10px 10px;
+  padding: 10px 10px;
+  border: 1px solid #44d43b;
 }
 
 .main-header__item a {
