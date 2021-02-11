@@ -78,7 +78,8 @@ html(lang="en")
                         .factor-content-desc Execute the app as one or more stateless processes.
                         .factor-content-explanation
                             .factor-content-explanation-header How we do it (Doubtful, check again)
-                            .factor-content-explanation-desc We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is constantly being updated even if our application is not. Machines die, security patches cause reboots. Server resources become consumed. Any of these things could cause the platform to kill your application. Don't worry though, Cloud Foundry makes sure to start a new process on the new freshly patched host before killing your old process.
+                            .factor-content-explanation-desc The node js app is run as an independent process in v8 engine. 
+                                p By stateless, means the process store-nothing and share-nothing between requests. Any data that needs to persist must be stored in a stateful backing service, typically a database. To ensure this principle, we have not used any express session or any mechanism that stores data in process memory.
                 .factor-card
                     .factor-title VII. #[a(href="https://12factor.net/port-binding" target="_blank") Port binding]
                     .factor-content 
