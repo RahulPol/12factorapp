@@ -62,3 +62,15 @@ tasks. `npm run build` is used to build this application and produces minified
 javascript and css files to be served as static assets.
 
 For this app we have `npm run dev` script to build the app, `npm start` to run the app and `Procfile` to release the app.
+
+### [VI. Processes](https://12factor.net/processes)
+
+Execute the app as one or more stateless processes.
+
+#### How we do it
+
+The node js app is run as an independent process in v8 runtime environment. By stateless the principle means the process store-nothing and share-nothing between requests. Any data that needs to persist must be stored in a stateful backing service, typically a database.
+
+Some web systems rely on “sticky sessions” – that is, caching user session data in memory of the app’s process and expecting future requests from the same visitor to be routed to the same process. Sticky sessions are a **violation** of twelve-factor and should never be used or relied upon. Session state data is a good candidate for a datastore that offers time-expiration, such as Memcached or Redis.
+
+To ensure this principle, we have not used any express session or any mechanism that stores data in process memory.
