@@ -74,3 +74,12 @@ The node js app is run as an independent process in v8 runtime environment. By s
 Some web systems rely on “sticky sessions” – that is, caching user session data in memory of the app’s process and expecting future requests from the same visitor to be routed to the same process. Sticky sessions are a **violation** of twelve-factor and should never be used or relied upon. Session state data is a good candidate for a datastore that offers time-expiration, such as Memcached or Redis.
 
 To ensure this principle, we have not used any express session or any mechanism that stores data in process memory.
+
+### [VII. Port binding](https://12factor.net/port-binding)
+
+Export services via port binding.
+
+#### How we do it
+
+Heroku assigns your application instance a port on the host machine and
+exposes it through the `PORT` environment variable.
