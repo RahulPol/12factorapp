@@ -7,6 +7,7 @@ const path = require("path");
 const multer = require("multer");
 const uuid = require("uuid");
 require("dotenv").config();
+var morgan = require("morgan");
 
 const spec = fs.readFileSync(path.join(__dirname, "swagger.yml"), "utf-8");
 const feedRoutes = require("./routes/feedRoutes");
@@ -42,6 +43,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+app.use(morgan("combined"));
 // app.use(bodyParser.urlencoded()) // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 app.use(

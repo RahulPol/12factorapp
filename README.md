@@ -114,3 +114,15 @@ Keep development, staging, and production as similar as possible
 #### How we do it
 
 We are using heroku's Github connection to auto deploy master branch. And for all new feature we create new branch and merge it later to master branch.
+
+### [XI. Logs](https://12factor.net/logs)
+
+Treat logs as event streams.
+
+#### How we do it
+
+We use `morgan` as our logger. We use logging levels to provide feedback about
+how the application is working. Some of this feedback could warrant a bug fix.
+
+Warnings are conditions that are unexpected and might hint that a bug exists in
+the code.
