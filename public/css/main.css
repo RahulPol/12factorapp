@@ -48,7 +48,6 @@ form {
 .main-header__item {
   margin: 10px 10px;
   padding: 10px 10px;
-  border: 1px solid #44d43b;
 }
 
 .main-header__item a {
@@ -91,20 +90,20 @@ form {
 .mobile-nav__item {
   margin: 1rem;
   padding: 0;
+  border: 1px solid #44d43b;
+  padding: 10px;
 }
 
 .mobile-nav__item a {
   text-decoration: none;
-  color: black;
-  font-size: 1.5rem;
-  padding: 0.5rem 2rem;
+  color: white;
+  font-size: 1rem;
 }
 
 .mobile-nav__item a:active,
 .mobile-nav__item a:hover,
 .mobile-nav__item a.active {
-  background: #44d43b;
-  color: white;
+  color: #44d43b;
   border-radius: 3px;
 }
 
