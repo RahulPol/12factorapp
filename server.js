@@ -4,7 +4,6 @@ const swaggerUi = require("swagger-ui-express");
 const fs = require("fs");
 const jsyaml = require("js-yaml");
 const path = require("path");
-const mongoose = require("mongoose");
 const multer = require("multer");
 const uuid = require("uuid");
 require("dotenv").config();
@@ -15,6 +14,7 @@ const authRoutes = require("./routes/authRoutes");
 const constants = require("./common/constants");
 const config = require("./common/config");
 const dbUtil = require("./models/dbUtil");
+let server = undefined;
 
 const app = express();
 app.set("view engine", "pug");
@@ -80,13 +80,26 @@ app.use((error, req, res, next) => {
   res.status(statusCode).json({ code: statusCode, message });
 });
 
-dbUtil
+const db = dbUtil
   .connectDB(configInstance.get("DATABASE"), configInstance.get("DATABASE_URI"))
   .then(() => {
-    app.listen(configInstance.get("PORT"), () => {
+    server = app.listen(configInstance.get("PORT"), () => {
       console.log("Server started!");
     });
   })
   .catch((err) => {
     console.log(err);
   });
+
+// Handle ^C
+process.on("SIGINT", function () {
+  console.log("Shutdown gracefully");
+  if (server) {
+    server.close();
+  }
+  if (db) {
+    dbUtil.closeConnection(configInstance.get("DATABASE"));
+  }
+
+  process.exit();
+});

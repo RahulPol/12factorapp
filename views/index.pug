@@ -101,7 +101,8 @@ html(lang="en")
                         .factor-content-desc Maximize robustness with fast startup and graceful shutdown.
                         .factor-content-explanation
                             .factor-content-explanation-header How we do it
-                            .factor-content-explanation-desc This code is tracked on github. Git flow can be used to manage branches for releases.
+                            .factor-content-explanation-desc We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is constantly being updated even if our application is not. By listening to process signals, we know when to stop serving requests, flush database connections, and close any open resources.
+                                p Checkout SIGINT handling on #[a(href="https://github.com/RahulPol/12factorapp/blob/main/server.js" target="_blank") server.js]
                 .factor-card
                     .factor-title X. #[a(href="https://12factor.net/dev-prod-parity" target="_blank") Dev/prod parity]
                     .factor-content 
