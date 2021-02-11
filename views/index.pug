@@ -63,7 +63,7 @@ html(lang="en")
                         .factor-content-desc Treat backing services as attached resources.
                         .factor-content-explanation
                             .factor-content-explanation-header How we do it
-                            .factor-content-explanation-desc We connect to the database via a connection url provided by the DATABASE_URI environment variable. If we needed to setup a new database, we would simply update the DATABASE_URI connection, and for database operation like create, update, read, delete, we can use factory to attach new database.                                
+                            .factor-content-explanation-desc We connect to the database via a connection url provided by the `DATABASE_URI` environment variable. If we needed to setup a new database, we would simply create a new database and bind the database to our application. We use a utility that will initiate either mongo or mysql database based on your environment variable. The same utility also gives database instance to your controller using dependency injection.
                 .factor-card
                     .factor-title V. #[a(href="https://12factor.net/build-release-run" target="_blank") Build, release, run]
                     .factor-content 
