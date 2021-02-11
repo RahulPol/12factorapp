@@ -14,6 +14,7 @@ const feedRoutes = require("./routes/feedRoutes");
 const authRoutes = require("./routes/authRoutes");
 const constants = require("./common/constants");
 const config = require("./common/config");
+const dbUtil = require("./models/dbUtil");
 
 const app = express();
 app.set("view engine", "pug");
@@ -79,10 +80,10 @@ app.use((error, req, res, next) => {
   res.status(statusCode).json({ code: statusCode, message });
 });
 
-mongoose
-  .connect(configInstance.get("DATABASE_URI"))
+dbUtil
+  .connectDB(configInstance.get("DATABASE"), configInstance.get("DATABASE_URI"))
   .then(() => {
-    app.listen(process.env.PORT || constants.PORT, () => {
+    app.listen(configInstance.get("PORT"), () => {
       console.log("Server started!");
     });
   })

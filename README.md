@@ -35,3 +35,18 @@ In localhost configuration is stored in environment variables and supplied throu
 In production configuration is supplied through config vars in deployment environment.
 
 Also, we can make the [config class](https://github.com/RahulPol/12factorapp/blob/3-Config/common/config.js) singleton to ensure we don't create unnecessary instances.
+
+### [IV. Backing services](https://12factor.net/backing-services)
+
+Treat backing services as attached resources.
+
+#### How we do it
+
+We connect to the database via a connection url provided by the
+`DATABASE_URI` environment variable. If we needed to setup a new database, we
+would simply create a new database and bind the
+database to our application.
+
+We use a utility that will initiate either mongo or mysql database based on your
+environment variable. The same utility also gives database instance to your controller
+using dependency injection.

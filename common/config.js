@@ -10,6 +10,7 @@ class Config {
     this.configObject = {
       HOST: process.env.HOST,
       PORT: process.env.PORT,
+      DATABASE: process.env.DATABASE,
       DATABASE_URI: process.env.DATABASE_URI,
     };
 
