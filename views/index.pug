@@ -70,8 +70,8 @@ html(lang="en")
                         .factor-content-desc Strictly separate build and run stages.
                         .factor-content-explanation
                             .factor-content-explanation-header How we do it
-                            .factor-content-explanation-desc package.json allows to configure "scripts" so that we can codify various tasks. npm run build is used to build this application and produces minified javascript and css files to be served as static assets.
-                                p npm start is used to start the application. The nodejs_buildpack runs this command by default to start your application.
+                            .factor-content-explanation-desc `package.json` allows to configure "scripts" so that we can codify various tasks. `npm run build` is used to build this application and produces minified javascript and css files to be served as static assets.
+                                p For this app we have `npm run dev` script to build the app, `npm start` to run the app and `Procfile` to release the app.
                 .factor-card
                     .factor-title VI. #[a(href="https://12factor.net/processes" target="_blank") Processes]
                     .factor-content 
