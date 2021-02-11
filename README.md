@@ -83,3 +83,15 @@ Export services via port binding.
 
 Heroku assigns your application instance a port on the host machine and
 exposes it through the `PORT` environment variable.
+
+### [VIII. Concurrency](https://12factor.net/concurrency)
+
+Scale out via the process model
+
+#### How we do it
+
+In the twelve-factor app, processes are a first class citizen. The developer can architect their app to handle diverse workloads by assigning each type of work to a process type. For example, HTTP requests may be handled by a web process, and long-running background tasks handled by a worker process.
+
+This includes individual processes from handling their own internal multiplexing, via threads inside the runtime VM, or the async/event based model found in tools such as EventMachine, Twisted, or Node.js.
+
+The process model truly shines when it comes time to scale out. The share-nothing, horizontally partitionable nature of twelve-factor app processes means that adding more concurrency is a simple and reliable operation. The array of process types and number of processes of each type is known as the process formation.
