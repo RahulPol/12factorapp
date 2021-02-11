@@ -106,3 +106,11 @@ The twelve-factor app’s processes are disposable, meaning they can be started 
 
 We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is
 constantly being updated even if our application is not. By listening to process signals, we know when to stop serving requests, flush database connections, and close any open resources. Checkout SIGINT handling on [server.js](https://github.com/RahulPol/12factorapp/blob/main/server.js)
+
+### [X. Dev/prod parity](https://12factor.net/dev-prod-parity)
+
+Keep development, staging, and production as similar as possible
+
+#### How we do it
+
+We are using heroku's Github connection to auto deploy master branch. And for all new feature we create new branch and merge it later to master branch.
