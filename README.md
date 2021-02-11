@@ -50,3 +50,15 @@ database to our application.
 We use a utility that will initiate either mongo or mysql database based on your
 environment variable. The same utility also gives database instance to your controller
 using dependency injection.
+
+### [V. Build, release, run](https://12factor.net/build-release-run)
+
+Strictly separate build and run stages.
+
+#### How we do it
+
+`package.json` allows to configure "scripts" so that we can codify various
+tasks. `npm run build` is used to build this application and produces minified
+javascript and css files to be served as static assets.
+
+For this app we have `npm run dev` script to build the app, `npm start` to run the app and `Procfile` to release the app.
