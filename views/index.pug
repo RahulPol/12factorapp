@@ -93,7 +93,8 @@ html(lang="en")
                         .factor-content-desc Scale out via the process model
                         .factor-content-explanation
                             .factor-content-explanation-header How we do it (Doubtful, check again)
-                            .factor-content-explanation-desc SIGTERM SIGINT above?
+                            .factor-content-explanation-desc In the twelve-factor app, processes are a first class citizen. The developer can architect their app to handle diverse workloads by assigning each type of work to a worker process/threads.
+                                p This includes individual processes from handling their own internal multiplexing, via threads inside the runtime VM, which is handled by Node.js process at heroku.
                 .factor-card
                     .factor-title IX. #[a(href="https://12factor.net/disposability" target="_blank") Disposability]
                     .factor-content 
