@@ -126,3 +126,13 @@ how the application is working. Some of this feedback could warrant a bug fix.
 
 Warnings are conditions that are unexpected and might hint that a bug exists in
 the code.
+
+### [XII. Admin processes](https://12factor.net/admin-processes)
+
+Run admin/management tasks as one-off processes.
+
+#### How we do it
+
+Any one-off tasks are added as npm scripts. The meat of these tasks is added to
+the `tasks` directory. Some take inputs which can be specified when running the
+task `npm run script -- arguments`.

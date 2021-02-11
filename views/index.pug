@@ -40,21 +40,21 @@ html(lang="en")
                     .factor-content 
                         .factor-content-desc One codebase tracked in revision control, many deploys.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
+                            .factor-content-explanation-header how I dd it in node[express js]
                             .factor-content-explanation-desc This code is tracked on github. #[a(href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow" target="_blank") Git flow] can be used to manage branches for releases.
                 .factor-card
                     .factor-title II. #[a(href="https://12factor.net/dependencies" target="_blank") Dependencies]
                     .factor-content 
                         .factor-content-desc Explicitly declare and isolate dependencies.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
+                            .factor-content-explanation-header how I dd it in node[express js]
                             .factor-content-explanation-desc #[a(href="https://github.com/RahulPol/12factorapp/blob/main/package.json" target="_blank") package.json] declare and lock dependencies to specific versions. npm installs modules to a local node_modules dir so each application's dependencies are isolated from the rest of the system.
                 .factor-card
                     .factor-title III. #[a(href="https://12factor.net/config") Config]
                     .factor-content 
                         .factor-content-desc Store config in the environment.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
+                            .factor-content-explanation-header how I dd it in node[express js]
                             .factor-content-explanation-desc For localhost configuration is stored in environment variables and supplied through the .env file. For production configuration is supplied through config vars in deployment environment.
                                 p The important point is, the config variables are stored and provided through environment.
                 .factor-card
@@ -62,37 +62,37 @@ html(lang="en")
                     .factor-content 
                         .factor-content-desc Treat backing services as attached resources.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
-                            .factor-content-explanation-desc We connect to the database via a connection url provided by the `DATABASE_URI` environment variable. If we needed to setup a new database, we would simply create a new database and bind the database to our application. We use a utility that will initiate either mongo or mysql database based on your environment variable. The same utility also gives database instance to your controller using dependency injection.
+                            .factor-content-explanation-header how I dd it in node[express js]
+                            .factor-content-explanation-desc I connect to the database via a connection url provided by the `DATABASE_URI` environment variable. If we needed to setup a new database, we would simply create a new database and bind the database to our application. I use a utility that will initiate either mongo or mysql database based on your environment variable. The same utility also gives database instance to your controller using dependency injection.
                 .factor-card
                     .factor-title V. #[a(href="https://12factor.net/build-release-run" target="_blank") Build, release, run]
                     .factor-content 
                         .factor-content-desc Strictly separate build and run stages.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
-                            .factor-content-explanation-desc `package.json` allows to configure "scripts" so that we can codify various tasks. `npm run build` is used to build this application and produces minified javascript and css files to be served as static assets.
-                                p For this app we have `npm run dev` script to build the app, `npm start` to run the app and `Procfile` to release the app.
+                            .factor-content-explanation-header how I dd it in node[express js]
+                            .factor-content-explanation-desc `package.json` allows to configure "scripts" so that Id can codify various tasks. `npm run build` is used to build this application and produces minified javascript and css files to be served as static assets.
+                                p For this app I have `npm run dev` script to build the app, `npm start` to run the app and `Procfile` to release the app.
                 .factor-card
                     .factor-title VI. #[a(href="https://12factor.net/processes" target="_blank") Processes]
                     .factor-content 
                         .factor-content-desc Execute the app as one or more stateless processes.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js] (Doubtful, check again)
+                            .factor-content-explanation-header how I dd it in node[express js] 
                             .factor-content-explanation-desc The node js app is run as an independent process in v8 engine. 
-                                p By stateless, means the process store-nothing and share-nothing between requests. Any data that needs to persist must be stored in a stateful backing service, typically a database. To ensure this principle, we have not used any express session or any mechanism that stores data in process memory.
+                                p By stateless, means the process store-nothing and share-nothing between requests. Any data that needs to persist must be stored in a stateful backing service, typically a database. To ensure this principle, I have not used any express session or any mechanism that stores data in process memory.
                 .factor-card
                     .factor-title VII. #[a(href="https://12factor.net/port-binding" target="_blank") Port binding]
                     .factor-content 
                         .factor-content-desc Export services via port binding.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
+                            .factor-content-explanation-header how I dd it in node[express js]
                             .factor-content-explanation-desc Heroku assigns your application instance a port on the host machine and exposes it through the PORT environment variable
                 .factor-card
                     .factor-title VIII. #[a(href="https://12factor.net/concurrency" target="_blank") Concurrency]
                     .factor-content 
                         .factor-content-desc Scale out via the process model
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js] (Doubtful, check again)
+                            .factor-content-explanation-header how I dd it in node[express js] 
                             .factor-content-explanation-desc In the twelve-factor app, processes are a first class citizen. The developer can architect their app to handle diverse workloads by assigning each type of work to a worker process/threads.
                                 p This includes individual processes from handling their own internal multiplexing, via threads inside the runtime VM, which is handled by Node.js process at heroku.
                 .factor-card
@@ -100,40 +100,36 @@ html(lang="en")
                     .factor-content 
                         .factor-content-desc Maximize robustness with fast startup and graceful shutdown.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
-                            .factor-content-explanation-desc We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is constantly being updated even if our application is not. By listening to process signals, we know when to stop serving requests, flush database connections, and close any open resources.
+                            .factor-content-explanation-header how I dd it in node[express js]
+                            .factor-content-explanation-desc I listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is constantly being updated even if our application is not. By listening to process signals, I know when to stop serving requests, flush database connections, and close any open resources.
                                 p Checkout SIGINT handling on #[a(href="https://github.com/RahulPol/12factorapp/blob/main/server.js" target="_blank") server.js]
                 .factor-card
                     .factor-title X. #[a(href="https://12factor.net/dev-prod-parity" target="_blank") Dev/prod parity]
                     .factor-content 
                         .factor-content-desc Keep development, staging, and production as similar as possible
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
-                            .factor-content-explanation-desc We are using heroku's Github connection to auto deploy master branch. And for all new feature we create new branch and merge it later to master branch.
+                            .factor-content-explanation-header how I dd it in node[express js]
+                            .factor-content-explanation-desc I am using heroku's Github connection to auto deploy master branch. And for all new feature I create new branch and merge it later to master branch.
                 .factor-card
                     .factor-title XI. #[a(href="https://12factor.net/logs" target="_blank") Logs]
                     .factor-content 
                         .factor-content-desc Treat logs as event streams.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
-                            .factor-content-explanation-desc We use morgan as our logger. We use logging levels to provide feedback about how the application is working. Some of this feedback could warrant a bug fix.
+                            .factor-content-explanation-header how I dd it in node[express js]
+                            .factor-content-explanation-desc I use morgan as our logger. I use logging levels to provide feedback about how the application is working. Some of this feedback could warrant a bug fix.
                                 p Warnings are conditions that are unexpected and might hint that a bug exists in the code.
                 .factor-card
                     .factor-title XII. #[a(href="https://12factor.net/admin-processes" target="_blank") Admin processes]
                     .factor-content 
                         .factor-content-desc Run admin/management tasks as one-off processes.
                         .factor-content-explanation
-                            .factor-content-explanation-header how we do it in node[express js]
-                            .factor-content-explanation-desc Read explanation on twelve factor app
+                            .factor-content-explanation-header how I dd it in node[express js]
+                            .factor-content-explanation-desc Any one-off tasks are added as npm scripts. The meat of these tasks is added to the `tasks` directory. Some take inputs which can be specified when running the task `npm run script -- arguments`.
             .socialLinks
                 a(href="https://www.linkedin.com/in/rahul-pol-409a2649/" rel="noreferrer" target="_blank")
                     img(src="/images/linkedIn.svg", alt="LinkedIn", title="LinkedIn")
                 a(href="https://twitter.com/RahulPo52226157" rel="noreferrer" target="_blank")
-                    img(src="/images/twitter.svg", alt="Twitter", title="Twitter")
-                //- a(href="https://github.com/RahulPol" rel="noreferrer" target="_blank")
-                //-     img(src="/images/github.png", alt="Github", title="Github")
-                //- a(href="https://rahul-pol.medium.com/" rel="noreferrer" target="_blank")
-                //-     img(src="/images/Medium.png", alt="Medium", title="Medium")
+                    img(src="/images/twitter.svg", alt="Twitter", title="Twitter")                
                 a(href="/" )
                     img(src="/images/gmail.svg", alt="Mail", title="polrahul10@gmail.com")
         
