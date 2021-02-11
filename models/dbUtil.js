@@ -42,3 +42,16 @@ exports.getDbInstance = (database) => {
       throw error;
   }
 };
+
+exports.closeConnection = (database) => {
+  switch (database) {
+    case "mongodb":
+      mongoose.connection.close();
+      break;
+
+    default:
+      error = new Error("Invalid database");
+      error.statusCode = constants.HTTP_INTERNAL_SERVER_ERROR;
+      throw error;
+  }
+};

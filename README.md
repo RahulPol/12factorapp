@@ -105,4 +105,4 @@ Maximize robustness with fast startup and graceful shutdown.
 The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice. This facilitates fast elastic scaling, rapid deployment of code or config changes, and robustness of production deploys.
 
 We listen to SIGTERM and SIGINT to know it's time to shutdown. The platform is
-constantly being updated even if our application is not. By listening to process signals, we know when to stop serving requests, flush database connections, and close any open resources.
+constantly being updated even if our application is not. By listening to process signals, we know when to stop serving requests, flush database connections, and close any open resources. Checkout SIGINT handling on [server.js](https://github.com/RahulPol/12factorapp/blob/main/server.js)
