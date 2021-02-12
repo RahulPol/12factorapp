@@ -11,3 +11,7 @@ exports.HTTP_VALIDATION_FAILED = 422;
 
 // Server error responses
 exports.HTTP_INTERNAL_SERVER_ERROR = 500;
+
+// JWT SECRET
+exports.JWT_SECRET = process.env.JWT_SECRET;
+exports.JWT_EXPIRES_IN = "1h";

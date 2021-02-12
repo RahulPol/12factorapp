@@ -12,6 +12,7 @@ var morgan = require("morgan");
 const spec = fs.readFileSync(path.join(__dirname, "swagger.yml"), "utf-8");
 const feedRoutes = require("./routes/feedRoutes");
 const authRoutes = require("./routes/authRoutes");
+const funRoutes = require("./routes/funRoutes");
 const constants = require("./common/constants");
 const config = require("./common/config");
 const dbUtil = require("./models/dbUtil");
@@ -63,6 +64,7 @@ app.use((req, res, next) => {
 
 app.use("/v1/feed", feedRoutes);
 app.use("/v1/auth", authRoutes);
+app.use("/v1/fun", funRoutes);
 
 const swaggerDocument = jsyaml.load(spec);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

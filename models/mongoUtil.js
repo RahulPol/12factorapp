@@ -1,7 +1,8 @@
 const Post = require("../models/postModel");
+const User = require("../models/userModel");
 const constants = require("../common/constants");
 
-class MongoUtil {
+class MongoPostUtil {
   async getPosts(currentPage, perPage) {
     let totalItems;
     try {
@@ -82,4 +83,33 @@ class MongoUtil {
   }
 }
 
-module.exports = MongoUtil;
+class MongoAuthUtil {
+  async createUser(userData) {
+    const { name, email, password } = userData;
+
+    const user = new User({
+      name,
+      email,
+      password,
+    });
+
+    try {
+      const result = await user.save();
+      return Promise.resolve(result);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  getUser(userData) {
+    const { email, password } = userData;
+    return User.findOne({ email });
+  }
+}
+
+exports.getModels = () => {
+  return {
+    Post: new MongoPostUtil(),
+    Auth: new MongoAuthUtil(),
+  };
+};
