@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const { validationResult } = require("express-validator");
 
-const Post = require("../models/postModel");
 const constants = require("../common/constants");
 const { getBaseURL, clearImage } = require("../common/utilities");
 const dbUtil = require("../models/dbUtil");
@@ -14,7 +13,7 @@ exports.getPosts = (req, res, next) => {
   const currentPage = req.query.page || 0;
   let perPage = 2;
   let totalItems = 0;
-  IDatabase.getPosts(currentPage, perPage)
+  IDatabase.Post.getPosts(currentPage, perPage)
     .then((result) => {
       totalItems = result.totalItems;
       return result.posts;
@@ -49,7 +48,7 @@ exports.createPost = (req, res, next) => {
   let imageUrl = req.file.path.replace("public\\", "").trim();
   imageUrl = path.join(getBaseURL(req), imageUrl);
 
-  IDatabase.createPost({ title, content, imageUrl })
+  IDatabase.Post.createPost({ title, content, imageUrl })
     .then((result) => {
       res.status(constants.HTTP_CREATED).json({
         message: "Post created successfully!",
@@ -67,7 +66,7 @@ exports.createPost = (req, res, next) => {
 exports.getPost = (req, res, next) => {
   const postId = req.params.postId;
 
-  IDatabase.getPost(postId)
+  IDatabase.Post.getPost(postId)
     .then((post) => {
       if (!post) {
         const error = new Error("The post not found!");
@@ -106,7 +105,7 @@ exports.updatePost = (req, res, next) => {
   }
   imageUrl = path.join(getBaseURL(req), imageUrl);
 
-  IDatabase.updatePost(postId, { title, content, imageUrl })
+  IDatabase.Post.updatePost(postId, { title, content, imageUrl })
     .then((result) => {
       if (imageUrl !== result.imageUrl) {
         clearImage(post.imageUrl);
@@ -124,7 +123,7 @@ exports.updatePost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   const postId = req.params.postId;
 
-  IDatabase.deletePost(postId)
+  IDatabase.Post.deletePost(postId)
     .then((post) => {
       clearImage(post.imageUrl);
       res

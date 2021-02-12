@@ -166,35 +166,83 @@ paths:
           $ref: "#/responses/Standard404ErrorResponse"
         500:
           $ref: "#/responses/Standard500ErrorResponse"
-  # /auth/signup:
-  #   put:
-  #     tags:
-  #       - "User"
-  #     summary: Create a new user
-  #     description: Creates a user
-  #     consumes:
-  #       - application/json
-  #     produces:
-  #       - "application/json"
-  #     parameters:
-  #       - in: "body"
-  #         name: "body"
-  #         description: "user object that needs to be added to the store"
-  #         required: true
-  #         schema:
-  #           $ref: "#/definitions/PostUser"
-  #     responses:
-  #       201:
-  #         description: created user
-  #         schema:
-  #           $ref: "#/responses/SignUpResponse"
-  #       400:
-  #         description: Bad request.
-  #       422:
-  #         $ref: "#/responses/Standard422ErrorResponse"
-  #       500:
-  #         $ref: "#/responses/Standard500ErrorResponse"
-
+  /auth/signup:
+    put:
+      tags:
+        - "User"
+      summary: Create a new user
+      description: Creates a user
+      consumes:
+        - application/json
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "user object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/PostUser"
+      responses:
+        201:
+          description: created user
+          schema:
+            $ref: "#/responses/SignUpResponse"
+        400:
+          description: Bad request.
+        422:
+          $ref: "#/responses/Standard422ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+  /auth/login:
+    post:
+      tags:
+        - "User"
+      summary: User Login
+      description: Logs in a user
+      consumes:
+        - application/json
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "user object that needs to be logged in"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginUser"
+      responses:
+        200:
+          description: User logged in successfully.
+          schema:
+            $ref: "#/responses/LoginResponse"
+        401:
+          $ref: "#/responses/Standard500ErrorResponse"
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
+  /fun/jokeoftheday:
+    get:
+      tags:
+        - "Fun"
+      summary: Gets joke for authenticated user
+      description: Returns a joke for authenticated user
+      security:
+        - UserSecurity: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: A list of posts
+          schema:
+            properties:
+              posts:
+                $ref: "#/definitions/Posts"
+              totalItems:
+                type: integer
+              perPage:
+                type: integer
+        500:
+          $ref: "#/responses/Standard500ErrorResponse"
 definitions:
   User:
     required:
@@ -259,15 +307,22 @@ definitions:
         type: array
         items:
           type: object
-  # PostUser:
-  #   type: "object"
-  #   properties:
-  #     name:
-  #       type: "string"
-  #     email:
-  #       type: "string"
-  #     password:
-  #       type: "string"
+  PostUser:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  LoginUser:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
 responses:
   Standard500ErrorResponse:
     description: An unexpected error occurred.
@@ -281,34 +336,20 @@ responses:
     description: Validation failed.
     schema:
       $ref: "#/definitions/ValidationError"
-  # SignUpResponse:
-  #   description: User created successfully.
-  #   properties:
-  #     message:
-  #       type: string
-  #     userId:
-  #       type: string
-  # parameters:
-#   title:
-#     name: title
-#     in: body
-#     required: true
-#     description: Title of the post
-#     type: string
-#   content:
-#     name: content
-#     in: body
-#     required: true
-#     description: Content of the post
-#     type: string
-#   imageUrl:
-#     name: imageUrl
-#     in: body
-#     description: Image of the post
-#     type: string
-#   creator:
-#     name: creator
-#     in: body
-#     description: Creator of the post
-#     schema:
-#       $ref: "#/definitions/User"
+  SignUpResponse:
+    description: User created successfully.
+    properties:
+      message:
+        type: string
+      userId:
+        type: string
+  LoginResponse:
+    description: User logged in successfully.
+    properties:
+      token:
+        type: string
+securityDefinitions:
+  UserSecurity:
+    type: apiKey
+    in: header
+    name: Authorization

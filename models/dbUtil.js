@@ -30,7 +30,7 @@ exports.getDbInstance = (database) => {
   let IDatabase;
   switch (database) {
     case "mongodb":
-      IDatabase = new MongoUtil();
+      IDatabase = MongoUtil.getModels();
       return IDatabase;
     case "mySql":
       error = new Error("No config present for mysql, yet!");
